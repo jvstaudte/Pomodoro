@@ -23,4 +23,9 @@ class TimerModel: ObservableObject {
     func stop() {
         timer?.cancel()
     }
+
+    func reset() {
+        timer?.cancel()
+        secondsLeft = 1500
+    }
 }

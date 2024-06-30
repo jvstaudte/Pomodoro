@@ -11,7 +11,7 @@
 		C0145C132C30BD1A00DF4E01 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0145C122C30BD1A00DF4E01 /* ContentView.swift */; };
 		C0145C152C30BD1B00DF4E01 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C0145C142C30BD1B00DF4E01 /* Assets.xcassets */; };
 		C0145C182C30BD1B00DF4E01 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C0145C172C30BD1B00DF4E01 /* Preview Assets.xcassets */; };
-		C0145C1F2C30CED200DF4E01 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0145C1E2C30CED200DF4E01 /* File.swift */; };
+		C0145C1F2C30CED200DF4E01 /* TimerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0145C1E2C30CED200DF4E01 /* TimerModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,7 +20,7 @@
 		C0145C122C30BD1A00DF4E01 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		C0145C142C30BD1B00DF4E01 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C0145C172C30BD1B00DF4E01 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		C0145C1E2C30CED200DF4E01 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
+		C0145C1E2C30CED200DF4E01 /* TimerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,7 +53,7 @@
 		C0145C0F2C30BD1A00DF4E01 /* Pomodoro */ = {
 			isa = PBXGroup;
 			children = (
-				C0145C1E2C30CED200DF4E01 /* File.swift */,
+				C0145C1E2C30CED200DF4E01 /* TimerModel.swift */,
 				C0145C102C30BD1A00DF4E01 /* PomodoroApp.swift */,
 				C0145C122C30BD1A00DF4E01 /* ContentView.swift */,
 				C0145C142C30BD1B00DF4E01 /* Assets.xcassets */,
@@ -141,7 +141,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C0145C132C30BD1A00DF4E01 /* ContentView.swift in Sources */,
-				C0145C1F2C30CED200DF4E01 /* File.swift in Sources */,
+				C0145C1F2C30CED200DF4E01 /* TimerModel.swift in Sources */,
 				C0145C112C30BD1A00DF4E01 /* PomodoroApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

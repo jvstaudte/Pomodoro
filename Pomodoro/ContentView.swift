@@ -13,18 +13,27 @@ struct ContentView: View {
     var body: some View {
         VStack {
             Text("\(timeString(time: timerModel.secondsLeft))")
-                .font(.largeTitle)
+                .font(.system(size: 80))
                 .padding()
 
             Button("Start") {
                 self.timerModel.start()
             }
             .buttonStyle(.borderedProminent)
+            .font(.largeTitle)
 
             Button("Stop") {
                 self.timerModel.stop()
             }
             .buttonStyle(.borderedProminent)
+            .font(.largeTitle)
+
+            Button("Reset") {
+                self.timerModel.reset()
+            }
+            .buttonStyle(.borderedProminent)
+            .font(.largeTitle)
+
         }
     }
 
