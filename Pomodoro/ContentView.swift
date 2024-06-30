@@ -12,32 +12,64 @@ struct ContentView: View {
     @State private var isStarted = false
 
     var body: some View {
-        VStack {
-            Text("\(timeString(time: timerModel.secondsLeft))")
-                .font(.system(size: 80))
-                .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                .padding()
+        ZStack {
 
-            Button(isStarted ? "Stop" : "Start") {
-                isStarted.toggle()
-                if (isStarted) {
-                    self.timerModel.start()
-                } else {
-                    self.timerModel.stop()
-                }
+            Color(isStarted ? .red : .blue)
+                .ignoresSafeArea()
+
+            VStack {
+                Spacer()
+
+                Text(isStarted ? "Working" : "Rest")
+                    .font(.largeTitle)
+
+                Spacer()
+
+                Text("\(timeString(time: timerModel.secondsLeft))")
+                    .font(.system(size: 80))
+                    .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                    .padding()
+
+                HStack {
+                    Button(isStarted ? "Stop" : "Start") {
+                        isStarted.toggle()
+                        if (isStarted) {
+                            self.timerModel.start()
+                        } else {
+                            self.timerModel.stop()
+                        }
+
+                    }
+                    .padding(20)
+                    .font(.largeTitle)
+                    .background(Color.blue)
+                    .foregroundStyle(.white)
+                    .clipShape(Capsule())
+
+                    Spacer()
+                        .frame(width: 40)
+
+                    Button("Reset") {
+                        self.timerModel.reset()
+                        isStarted = false
+                    }
+                    .padding(20)
+                    .font(.largeTitle)
+                    .background(Color.blue)
+                    .foregroundStyle(.white)
+                    .clipShape(Capsule())
+            }
+                Spacer()
 
             }
-            .buttonStyle(.borderedProminent)
-            .font(.largeTitle)
+            .frame(width: 300, height: 300)
+            .padding(20)
+            .background(Color.white)
+            .clipShape(RoundedRectangle(cornerRadius: 25))
 
-            Button("Reset") {
-                self.timerModel.reset()
-            }
-            .buttonStyle(.borderedProminent)
-            .font(.largeTitle)
 
         }
-        .background(isStarted ? Color.green : Color.red)
+
     }
 
     func timeString(time: Int) -> String {
