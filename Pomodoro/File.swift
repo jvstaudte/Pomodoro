@@ -1,42 +1,26 @@
-//
-//  File.swift
-//  Pomodoro
-//
-//  Created by James Staudte on 6/29/24.
-//
+import Foundation
+import Combine
 
-import SwiftUI
+class TimerModel: ObservableObject {
+    @Published var secondsLeft: Int = 1500 // 25 minutes * 60 seconds
 
-struct ContentView: View {
-    // Example date string
-    let timeString = "1500"
+    var timer: AnyCancellable?
 
-    // DateFormatter to parse the time string
-    let dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "HHmm"
-        return formatter
-    }()
-
-    // Convert the string to a date
-    var parsedDate: Date? {
-        return dateFormatter.date(from: timeString)
-    }
-
-    var body: some View {
-        VStack {
-            if let date = parsedDate {
-                Text("Parsed date: \(date)")
-            } else {
-                Text("Invalid date string")
-            }
+    func start() {
+        timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect().sink { [weak self] _ in
+            self?.tick()
         }
-        .padding()
     }
-}
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
+    func tick() {
+        if secondsLeft > 0 {
+            secondsLeft -= 1
+        } else {
+            timer?.cancel()
+        }
+    }
+
+    func stop() {
+        timer?.cancel()
     }
 }
