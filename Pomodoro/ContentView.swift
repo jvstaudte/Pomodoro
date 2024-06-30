@@ -9,21 +9,23 @@ import SwiftUI
 
 struct ContentView: View {
     @ObservedObject var timerModel = TimerModel()
+    @State private var isStarted = false
 
     var body: some View {
         VStack {
             Text("\(timeString(time: timerModel.secondsLeft))")
                 .font(.system(size: 80))
+                .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                 .padding()
 
-            Button("Start") {
-                self.timerModel.start()
-            }
-            .buttonStyle(.borderedProminent)
-            .font(.largeTitle)
+            Button(isStarted ? "Stop" : "Start") {
+                isStarted.toggle()
+                if (isStarted) {
+                    self.timerModel.start()
+                } else {
+                    self.timerModel.stop()
+                }
 
-            Button("Stop") {
-                self.timerModel.stop()
             }
             .buttonStyle(.borderedProminent)
             .font(.largeTitle)
@@ -35,6 +37,7 @@ struct ContentView: View {
             .font(.largeTitle)
 
         }
+        .background(isStarted ? Color.green : Color.red)
     }
 
     func timeString(time: Int) -> String {
