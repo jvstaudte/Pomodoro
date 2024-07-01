@@ -7,15 +7,29 @@
 
 import SwiftUI
 
+struct BlueButton: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .padding(20)
+            .font(.largeTitle)
+            .background(Color.blue.gradient)
+            .foregroundStyle(.white)
+            .clipShape(RoundedRectangle(cornerRadius: 20))
+    }
+}
+
 struct ContentView: View {
     @ObservedObject var timerModel = TimerModel()
     @State private var isStarted = false
+    @State private var isPressed = false
+    @State private var isPressed2 = false
 
     var body: some View {
         ZStack {
 
-            Color(isStarted ? .red : .blue)
+            Color(isStarted ? .red : .blue) // this might need to be Work/Rest/Stopped
                 .ignoresSafeArea()
+
             VStack {
                 Spacer()
 
@@ -42,11 +56,14 @@ struct ContentView: View {
                             }
 
                         }
-                        .padding(20)
-                        .font(.largeTitle)
-                        .background(Color.blue)
-                        .foregroundStyle(.white)
-                        .clipShape(RoundedRectangle(cornerRadius: 20))
+                        .buttonStyle(BlueButton())
+                        .shadow(color: .gray, radius: isPressed ? 0 : 5, x: 0, y: 0)
+                        .onLongPressGesture(minimumDuration: .infinity, pressing: { pressing in
+                            withAnimation {
+                                isPressed = pressing
+                            }
+                        }, perform: {})
+
 
                         Spacer()
                             .frame(width: 40)
@@ -55,27 +72,28 @@ struct ContentView: View {
 //                            self.timerModel.reset()
                             isStarted = false
                         }
+                        .buttonStyle(BlueButton())
                         .simultaneousGesture(LongPressGesture().onEnded { _ in
                             self.timerModel.resetRest()
                         })
                         .simultaneousGesture(TapGesture(count: 1).onEnded { _ in
                             self.timerModel.reset()
                         })
-                        .padding(20)
-                        .font(.largeTitle)
-                        .background(Color.blue)
-                        .foregroundStyle(.white)
-                        .clipShape(RoundedRectangle(cornerRadius: 20))
+                        .shadow(color: .gray, radius: isPressed2 ? 0 : 5, x: 0, y: 0)
+                        .onLongPressGesture(minimumDuration: .infinity, pressing: { pressing in
+                            withAnimation {
+                                isPressed2 = pressing
+                            }
+                        }, perform: {})
+
                     }
                     Spacer()
-
 
                 }
                 .frame(width: 300, height: 300)
                 .padding(20)
                 .background(Color.white)
                 .clipShape(RoundedRectangle(cornerRadius: 25))
-
 
                 Spacer()
                 Spacer()
