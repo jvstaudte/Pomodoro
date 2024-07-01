@@ -16,57 +16,71 @@ struct ContentView: View {
 
             Color(isStarted ? .red : .blue)
                 .ignoresSafeArea()
-
             VStack {
                 Spacer()
 
-                Text(isStarted ? "Working" : "Rest")
-                    .font(.largeTitle)
+                VStack {
+                    Spacer()
 
-                Spacer()
-
-                Text("\(timeString(time: timerModel.secondsLeft))")
-                    .font(.system(size: 80))
-                    .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                    .padding()
-
-                HStack {
-                    Button(isStarted ? "Stop" : "Start") {
-                        isStarted.toggle()
-                        if (isStarted) {
-                            self.timerModel.start()
-                        } else {
-                            self.timerModel.stop()
-                        }
-
-                    }
-                    .padding(20)
-                    .font(.largeTitle)
-                    .background(Color.blue)
-                    .foregroundStyle(.white)
-                    .clipShape(Capsule())
+                    Text(isStarted ? "Working" : "Rest")
+                        .font(.largeTitle)
 
                     Spacer()
-                        .frame(width: 40)
 
-                    Button("Reset") {
-                        self.timerModel.reset()
-                        isStarted = false
+                    Text("\(timeString(time: timerModel.secondsLeft))")
+                        .font(.system(size: 80))
+                        .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                        .padding()
+
+                    HStack {
+                        Button(isStarted ? "Stop" : "Start") {
+                            isStarted.toggle()
+                            if (isStarted) {
+                                self.timerModel.start()
+                            } else {
+                                self.timerModel.stop()
+                            }
+
+                        }
+                        .padding(20)
+                        .font(.largeTitle)
+                        .background(Color.blue)
+                        .foregroundStyle(.white)
+                        .clipShape(RoundedRectangle(cornerRadius: 20))
+
+                        Spacer()
+                            .frame(width: 40)
+
+                        Button("Reset") {
+                            self.timerModel.reset()
+                            isStarted = false
+                        }
+                        .simultaneousGesture(TapGesture(count: 2).onEnded { _ in
+                            print("tap tap")
+                        })
+                        .simultaneousGesture(LongPressGesture().onEnded { _ in
+                            print("taaaaaaaap")
+                        })
+                        .padding(20)
+                        .font(.largeTitle)
+                        .background(Color.blue)
+                        .foregroundStyle(.white)
+                        .clipShape(RoundedRectangle(cornerRadius: 20))
                     }
-                    .padding(20)
-                    .font(.largeTitle)
-                    .background(Color.blue)
-                    .foregroundStyle(.white)
-                    .clipShape(Capsule())
-            }
+                    Spacer()
+
+
+                }
+                .frame(width: 300, height: 300)
+                .padding(20)
+                .background(Color.white)
+                .clipShape(RoundedRectangle(cornerRadius: 25))
+
+
+                Spacer()
                 Spacer()
 
             }
-            .frame(width: 300, height: 300)
-            .padding(20)
-            .background(Color.white)
-            .clipShape(RoundedRectangle(cornerRadius: 25))
-
 
         }
 
