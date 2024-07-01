@@ -52,14 +52,14 @@ struct ContentView: View {
                             .frame(width: 40)
 
                         Button("Reset") {
-                            self.timerModel.reset()
+//                            self.timerModel.reset()
                             isStarted = false
                         }
-                        .simultaneousGesture(TapGesture(count: 2).onEnded { _ in
-                            print("tap tap")
-                        })
                         .simultaneousGesture(LongPressGesture().onEnded { _ in
-                            print("taaaaaaaap")
+                            self.timerModel.resetRest()
+                        })
+                        .simultaneousGesture(TapGesture(count: 1).onEnded { _ in
+                            self.timerModel.reset()
                         })
                         .padding(20)
                         .font(.largeTitle)
