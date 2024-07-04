@@ -89,6 +89,7 @@ struct ContentView: View {
                     }
                     Spacer()
 
+
                 }
                 .frame(width: 300, height: 300)
                 .padding(20)
@@ -104,12 +105,15 @@ struct ContentView: View {
 
     }
 
+
     func timeString(time: Int) -> String {
         let minutes = time / 60
         let seconds = time % 60
         return String(format: "%02d:%02d", minutes, seconds)
     }
 }
+
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {

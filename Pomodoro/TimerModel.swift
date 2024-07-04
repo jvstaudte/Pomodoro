@@ -1,3 +1,4 @@
+import AudioToolbox
 import Foundation
 import Combine
 
@@ -16,6 +17,7 @@ class TimerModel: ObservableObject {
         if secondsLeft > 0 {
             secondsLeft -= 1
         } else {
+            playAlarm()
             timer?.cancel()
         }
     }
@@ -33,4 +35,17 @@ class TimerModel: ObservableObject {
         timer?.cancel()
         secondsLeft = 5 * 60
     }
+
+    func playAlarm() {
+        // Predefined sound ID for a built-in alarm sound
+        let systemSoundID: SystemSoundID = 1009
+        AudioServicesPlaySystemSound(systemSoundID)
+    }
+    //    func playAlarm(alrm: UInt32) {
+    //        // Predefined sound ID for a built-in alarm sound
+    //        let systemSoundID: SystemSoundID = alrm
+    //        AudioServicesPlaySystemSound(systemSoundID)
+    //    like 1008, 1009
+    //    }
+
 }
