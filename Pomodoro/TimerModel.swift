@@ -4,7 +4,7 @@ import Combine
 import SwiftUI
 
 class TimerModel: ObservableObject {
-    @Published var secondsLeft: Int = 30 //1500 // 25 minutes * 60 seconds
+    @Published var secondsLeft: Int = 1500 //1500 // 25 minutes * 60 seconds
     
     var timer: AnyCancellable?
     
@@ -74,14 +74,14 @@ class TimerModel: ObservableObject {
         timer?.cancel()
         isStartedT = false
         isWorkingT = true
-        secondsLeft = 30 //25 * 60
+        secondsLeft = 1500 //25 * 60
     }
     
     func resetRest() {
         timer?.cancel()
         isStartedT = false
         isWorkingT = false
-        secondsLeft = 10 //5 * 60
+        secondsLeft = 300 //5 * 60
     }
     
     func playAlarm() {
