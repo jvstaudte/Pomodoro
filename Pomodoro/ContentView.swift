@@ -5,6 +5,9 @@
 //  Created by James Staudte on 6/29/24.
 //
 
+//still needs haptic
+//and set times back to default
+
 import SwiftUI
 
 struct BlueButton: ButtonStyle {
@@ -19,27 +22,26 @@ struct BlueButton: ButtonStyle {
 }
 
 struct ContentView: View {
+    @State private var randomNumber = 0.0
+
+
     @ObservedObject var timerModel = TimerModel()
     @State private var isPressed = false
     @State private var isPressed2 = false
-    @State private var isStartWork: String = "Paused"
 
     var body: some View {
         ZStack {
 
-            Color(ifStartWork().color) // this might need to be Work/Rest/Stopped
+            Color(timerModel.ifStartWorkColor)
                 .ignoresSafeArea()
 
             VStack {
                 Spacer()
 
                 VStack {
-                    Text("Start: \(timerModel.isStartedT)")
-                    Text("Work: \(timerModel.isWorkingT)")
-
                     Spacer()
 
-                    Text(ifStartWork().isSW)
+                    Text(timerModel.ifStartWorkText)
                         .font(.largeTitle)
 
                     Spacer()
@@ -96,7 +98,7 @@ struct ContentView: View {
 
                 }
                 .frame(width: 300, height: 300)
-                .padding(20)
+                .padding(10)
                 .background(Color.white)
                 .clipShape(RoundedRectangle(cornerRadius: 25))
 
@@ -104,51 +106,16 @@ struct ContentView: View {
                 Spacer()
 
             }
-            .onAppear {
-                print(timerModel.secondsLeft)
-                print(timerModel.secondsLeft % 2)
-                selectProgram()
-            }
         }
     }
+//        .sensoryFeedback(.success, trigger: randomNumber)
+}
 
-    func ifStartWork() -> (isSW: String, color: Color) {
-        if timerModel.isStartedT {
-            if timerModel.isWorkingT == true {
-                return ("Working", .red)
-            } else {
-                return ("Resting", .blue)
-            }
-        } else {
-            return ("Paused", .black)
-        }
 
-    }
-
-    func timeString(time: Int) -> String {
-        let minutes = time / 60
-        let seconds = time % 60
-        return String(format: "%02d:%02d", minutes, seconds)
-    }
-
-    func selectProgram() {
-        if timerModel.secondsLeft == 0 {
-            if timerModel.isWorkingT {
-                self.timerModel.resetRest()
-                self.timerModel.start()
-                //change to 5 min and start
-            } else {
-                self.timerModel.reset()
-                self.timerModel.start()
-                //change to 25 and start
-            }
-            timerModel.isWorkingT.toggle()
-
-            //check which thing is running
-            //then reset to the opposite
-            //?change the color?
-        }
-    }
+func timeString(time: Int) -> String {
+    let minutes = time / 60
+    let seconds = time % 60
+    return String(format: "%02d:%02d", minutes, seconds)
 }
 
 
@@ -159,113 +126,6 @@ struct ContentView_Previews: PreviewProvider {
     }
 }
 
-
-
-//import SwiftUI
-//
-//struct ContxentView: View {
-//    @State var startDate = Date.now
-//    @State var timeElapsed: Int = 25*60
-//
-//    // 1
-//    @State var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-//
-//
-//    var body: some View {
-////        timer.upstream.connect().cancel()
-//
-//        VStack {
-//            Text("\(timeElapsed)")
-//                .onReceive(timer) { firedDate in
-//                    print("timer fired")
-//                    timeElapsed = timeElapsed-1
-//                }
-//            Button("Stop") {
-//                timer.upstream.connect().cancel()
-//            }
-//            Button("Start") {
-//                timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-//            }
-//            Button("Reset") {
-//            timeElapsed = 25*60
-//                timer.upstream.connect().cancel()
-//            }
-//        }
-//        .font(.largeTitle)
-//    }
-//}
-
-//struct ContentView: View {
-//    @State var timeRemaining = 25*60
-////    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-////    let timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(fireTimer), userInfo: nil, repeats: true)
-//
-////    let timer: Text.DateStyle
-//    let min25 = Date.now.addingTimeInterval(25*60)
-//
-//    var body: some View {
-//
-//        VStack {
-//            Spacer()
-//            var runCount = 0
-//
-//            let timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
-//                print("Timer fired! \(runCount)")
-//                runCount += 1
-//            }
-//
-////            // make a timer style, automatically updating
-////            Text(min25, style: .timer)
-////                .font(.largeTitle)
-////
-////            Spacer()
-////
-//            Button("Stop") {
-//                print("Button tapped!")
-//                timer.invalidate()
-//            }
-//            .buttonStyle(.borderedProminent)
-//            .font(.largeTitle)
-//
-//            Button("Start") {
-//                print("Button tapped!")
-//                timer.up
-//            }
-//            .buttonStyle(.borderedProminent)
-//            .font(.largeTitle)
-//
-//
-//            Spacer()
-////            var runCount = 0
-////
-////            Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
-////                print("Timer fired!")
-////                runCount += 1
-////
-////                if runCount == 3 {
-////                    timer.invalidate()
-////                }
-////            }
-////
-////            Spacer()
-////
-////            Text("\(timeRemaining)")
-//////                .onReceive(timer) { _ in
-////                    if timeRemaining > 0 {
-////                        timeRemaining -= 1
-////                    }
-////                }
-////            Spacer()
-//
-//       }
-//
-//
-//     }
-//
-////@objc func fireTimer() {
-////    print("Timer fired!")
-////}
-//}
 
 #Preview {
     ContentView()
