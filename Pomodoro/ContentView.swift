@@ -20,23 +20,26 @@ struct BlueButton: ButtonStyle {
 
 struct ContentView: View {
     @ObservedObject var timerModel = TimerModel()
-    @State private var isStarted = false
     @State private var isPressed = false
     @State private var isPressed2 = false
+    @State private var isStartWork: String = "Paused"
 
     var body: some View {
         ZStack {
 
-            Color(isStarted ? .red : .blue) // this might need to be Work/Rest/Stopped
+            Color(ifStartWork().color) // this might need to be Work/Rest/Stopped
                 .ignoresSafeArea()
 
             VStack {
                 Spacer()
 
                 VStack {
+                    Text("Start: \(timerModel.isStartedT)")
+                    Text("Work: \(timerModel.isWorkingT)")
+
                     Spacer()
 
-                    Text(isStarted ? "Working" : "Rest")
+                    Text(ifStartWork().isSW)
                         .font(.largeTitle)
 
                     Spacer()
@@ -47,9 +50,9 @@ struct ContentView: View {
                         .padding()
 
                     HStack {
-                        Button(isStarted ? "Stop" : "Start") {
-                            isStarted.toggle()
-                            if (isStarted) {
+                        Button(timerModel.isStartedT ? "Stop" : "Start") {
+                            timerModel.isStartedT.toggle()
+                            if (timerModel.isStartedT) {
                                 self.timerModel.start()
                             } else {
                                 self.timerModel.stop()
@@ -69,15 +72,16 @@ struct ContentView: View {
                             .frame(width: 40)
 
                         Button("Reset") {
-//                            self.timerModel.reset()
-                            isStarted = false
+                            timerModel.isStartedT = false
                         }
                         .buttonStyle(BlueButton())
                         .simultaneousGesture(LongPressGesture().onEnded { _ in
                             self.timerModel.resetRest()
+                            timerModel.isWorkingT = false
                         })
                         .simultaneousGesture(TapGesture(count: 1).onEnded { _ in
                             self.timerModel.reset()
+                            timerModel.isWorkingT = true
                         })
                         .shadow(color: .gray, radius: isPressed2 ? 0 : 5, x: 0, y: 0)
                         .onLongPressGesture(minimumDuration: .infinity, pressing: { pressing in
@@ -100,16 +104,50 @@ struct ContentView: View {
                 Spacer()
 
             }
+            .onAppear {
+                print(timerModel.secondsLeft)
+                print(timerModel.secondsLeft % 2)
+                selectProgram()
+            }
+        }
+    }
 
+    func ifStartWork() -> (isSW: String, color: Color) {
+        if timerModel.isStartedT {
+            if timerModel.isWorkingT == true {
+                return ("Working", .red)
+            } else {
+                return ("Resting", .blue)
+            }
+        } else {
+            return ("Paused", .black)
         }
 
     }
-
 
     func timeString(time: Int) -> String {
         let minutes = time / 60
         let seconds = time % 60
         return String(format: "%02d:%02d", minutes, seconds)
+    }
+
+    func selectProgram() {
+        if timerModel.secondsLeft == 0 {
+            if timerModel.isWorkingT {
+                self.timerModel.resetRest()
+                self.timerModel.start()
+                //change to 5 min and start
+            } else {
+                self.timerModel.reset()
+                self.timerModel.start()
+                //change to 25 and start
+            }
+            timerModel.isWorkingT.toggle()
+
+            //check which thing is running
+            //then reset to the opposite
+            //?change the color?
+        }
     }
 }
 

@@ -3,9 +3,13 @@ import Foundation
 import Combine
 
 class TimerModel: ObservableObject {
-    @Published var secondsLeft: Int = 1500 // 25 minutes * 60 seconds
+    @Published var secondsLeft: Int = 8 //1500 // 25 minutes * 60 seconds
 
     var timer: AnyCancellable?
+
+
+    var isStartedT = false
+    var isWorkingT = true
 
     func start() {
         timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect().sink { [weak self] _ in
@@ -16,6 +20,7 @@ class TimerModel: ObservableObject {
     func tick() {
         if secondsLeft > 0 {
             secondsLeft -= 1
+//            print(isWorking)
         } else {
             playAlarm()
             timer?.cancel()
@@ -28,12 +33,12 @@ class TimerModel: ObservableObject {
 
     func reset() {
         timer?.cancel()
-        secondsLeft = 25 * 60
+        secondsLeft = 8 //25 * 60
     }
 
     func resetRest() {
         timer?.cancel()
-        secondsLeft = 5 * 60
+        secondsLeft = 4 //5 * 60
     }
 
     func playAlarm() {
